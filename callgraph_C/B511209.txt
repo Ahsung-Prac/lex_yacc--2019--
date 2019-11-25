@@ -1,0 +1,90 @@
+1.리눅스 서버에 맞춰 최대한 메모리를 할당했기에 다른 컴퓨터에서 돌릴 경우 메모리부족으로 컴파일이 안될 수 있습니다.
+
+2.리눅스에서 생성한 텍스트파일을 다른 운영체제에서 열면 출력 형태가 다를 수 있습니다.
+
+
+
+프로그래밍언어 HW4 B511209 최아성_콜그래프
+
+출력 방식
+-----------
+
+함수1 -> 호출한 함수 나열...(호출된 횟수와 호출된 라인 출력)
+
+===== 함수1 start ====(함수 1에서 내장함수를 제외한 호출한 함수들의 그래프를 이어서 출력)
+
+	tab띄고 (callee:함수1) 피호출함수 ->  함수1에서부터 이어서 호출하는 그래프 반복 출력 
+
+
+/* 이미 한번 콜그래프가 그려진 함수는 더 그리지 않고 이미 그려진  그래프의 경로만 알려줍니다 */.
+
+========================================================================================
+
+
+
+
+
+
+ main -> { Squ:1.times(234),   SetMatrix:3.times(235,236,237),   Standard:1.times(240),   strassen:1.times(241),   FreeMat:3.times(260,261,262) |내장함수|: printf:13.times(225,228,229,231,232,233,242,243,245,246,247,248,249),   fopen:1.times(226),   puts:1.times(227),   fprintf:7.times(251,252,254,255,256,257,258),   fclose:1.times(264) }
+
+=============================== main  Start ===============================
+
+
+		| (callee:main) Squ -> { }
+
+
+		| (callee:main) SetMatrix -> { |내장함수|: malloc:2.times(14,16) }
+
+
+		| (callee:main) Standard -> { |내장함수|: clock:2.times(43,59) }
+
+
+		| (callee:main) strassen -> { Standard:1.times(95),   SetMatrix:7.times(105,106,108,109,110,111,114),   Matadd:12.times(137,138,141,150,156,160,166,168,170,172,174,176),   strassen:7.times(139,142,145,148,151,157,161),   Matsub:6.times(144,147,155,159,167,175),   FreeMat:7.times(204,205,206,207,210,212,213) |내장함수|: clock:2.times(91,217) }
+
+		|=============================== strassen  Start ===============================
+
+
+		|		| (callee:strassen) Standard -> { 경로: main -> Standard 에서 먼저 그래프 그려짐. }
+
+
+		|		| (callee:strassen) SetMatrix -> { 경로: main -> SetMatrix 에서 먼저 그래프 그려짐. }
+
+
+		|		| (callee:strassen) Matadd -> { }
+
+
+		|		| (callee:strassen) strassen -> { 재귀함수 }
+
+
+		|		| (callee:strassen) Matsub -> { }
+
+
+		|		| (callee:strassen) FreeMat -> { |내장함수|: free:2.times(27,29) }
+
+
+		|=============================== strassen  End ===============================
+
+
+
+
+		| (callee:main) FreeMat -> { 경로: main -> strassen -> FreeMat 에서 먼저 그래프 그려짐. }
+
+
+=============================== main  End ===============================
+
+
+
+
+
+
+
+    선언된 함수의 종류
+------------------------------
+ SetMatrix 
+ FreeMat 
+ Squ 
+ Standard 
+ Matadd 
+ Matsub 
+ strassen 
+ main 
